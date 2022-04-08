@@ -1,0 +1,135 @@
+.mainscreen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgb(241, 58, 52);
+  background: radial-gradient(
+    circle,
+    rgb(248, 71, 65) 0%,
+    rgb(247, 71, 68) 100%
+  );
+  color: rgb(184, 85, 82);
+}
+
+.ch_card {
+  width: 60rem;
+  margin: auto;
+  background: white;
+  position: center;
+  align-self: center;
+  top: 50rem;
+  border-radius: 1.5rem;
+  box-shadow: 4px 3px 20px #3535358c;
+  display: flex;
+  flex-direction: row;
+}
+
+.ch_card_leftside {
+  background: linear-gradient(
+    135deg,
+    rgb(248, 71, 65) 0%,
+    rgb(136, 52, 51) 100%
+  );
+  width: 25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
+}
+.ch_card_leftside > img {
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.ch_card_rightside {
+  background-color: #ffffff;
+  width: 35rem;
+  border-bottom-right-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  padding: 1rem 2rem 3rem 3rem;
+}
+
+.ch_card p {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 0.8rem 0;
+}
+
+.ch_card_inputbox {
+  color: #030303;
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 1.5px solid #ccc;
+  margin-bottom: 1rem;
+  border-radius: 0.3rem;
+  font-family: "Roboto", sans-serif;
+  color: #615a5a;
+  font-size: 1.1rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.expcvv {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.6rem;
+}
+
+.expcvv_text {
+  padding-right: 1rem;
+}
+.expcvv_text2 {
+  padding: 0 1rem;
+}
+
+.ch_card_button {
+  background: linear-gradient(
+    135deg,
+    rgb(248, 71, 65) 0%,
+    rgb(136, 52, 51) 100%
+  );
+  cursor: pointer;
+  padding: 15px;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  width: 100%;
+  letter-spacing: 0.11rem;
+  outline: none;
+  transition: 0.2s;
+}
+
+.ch_card_button:hover {
+  transform: scale(1.02) translateY(-3px);
+  box-shadow: 3px 3px 6px #38373785;
+}
+
+@media only screen and (max-width: 1000px) {
+  .ch_card {
+    flex-direction: column;
+    width: auto;
+  }
+
+  .ch_card_leftside {
+    width: 100%;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-radius: 0;
+  }
+
+  .ch_card_rightside {
+    width: auto;
+    border-bottom-left-radius: 1.5rem;
+    padding: 0.5rem 3rem 3rem 2rem;
+    border-radius: 0;
+  }
+}
