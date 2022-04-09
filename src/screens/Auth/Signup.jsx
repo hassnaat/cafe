@@ -3,9 +3,10 @@ import "./Auth.css";
 import User from "../../assets/images/user.png";
 import axios from "../../axiosInstance";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../store/user";
+import asyncLocalStorage from "./asyncLocalStorage";
 const Signup = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -62,10 +63,13 @@ const Signup = () => {
     } else {
       try {
         const registered = await axios.post("/register", data);
-        localStorage.setItem("user", JSON.stringify(registered.data));
-        dispatch(addUser(registered.data));
+        const stored = await asyncLocalStorage.setItem(
+          "user",
+          JSON.stringify(registered.data)
+        );
+        // dispatch(addUser(registered.data));
 
-        navigate("/children");
+        window.location.href = "/";
       } catch (error) {
         toast.error("Failed to register", {
           position: "top-center",
@@ -156,6 +160,9 @@ const Signup = () => {
               onClick={handleSubmit}
             />
           </form>
+          <Link to="/login" className="goto_signup_btn">
+            Go to Login
+          </Link>
         </div>
       </div>
     </div>

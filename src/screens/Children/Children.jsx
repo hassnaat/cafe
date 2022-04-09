@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Children.css";
 import Add from "../../assets/images/add.png";
 import AddChild from "../Modals/AddChild";
 import useFetch from "../../hooks/UseFetch";
 import { useSelector } from "react-redux";
 import Logout from "../Auth/Logout";
+import { Link } from "react-router-dom";
 
 const Children = () => {
   const [addChild, setAddChild] = useState(false);
   const user = useSelector((state) => state.user);
+
   const children = useFetch(`/childrens/${user.user.id}`, {
     headers: {
       Authorization: `Bearer ${user.token}`,
@@ -48,7 +50,11 @@ const Children = () => {
                       <td>{item.name}</td>
                       <td>{item.balance} SR</td>
                       <td>
-                        <img src={Add} alt="" className="crt_add_icon" />
+                        <Link
+                          to={`/checkout?balance=${item.balance}&&child_id=${item.child_id}`}
+                        >
+                          <img src={Add} alt="" className="crt_add_icon" />
+                        </Link>
                       </td>
                     </tr>
                   );

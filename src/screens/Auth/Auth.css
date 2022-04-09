@@ -133,6 +133,11 @@
   background-color: rgb(250, 55, 49);
   cursor: pointer;
 }
+.goto_signup_btn {
+  position: relative;
+  bottom: 20px;
+  color: rgb(7, 99, 68);
+}
 @media (max-width: 415px) {
   .login_form_box {
     display: flex;

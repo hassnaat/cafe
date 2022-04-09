@@ -4,9 +4,10 @@ import User from "../../assets/images/user.png";
 import axios from "../../axiosInstance";
 import useFetch from "../../hooks/UseFetch";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../store/user";
+import asyncLocalStorage from "./asyncLocalStorage";
 const AdminSignup = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -122,10 +123,11 @@ const AdminSignup = () => {
           city_id: parseInt(cityId),
           school_id: parseInt(schoolId),
         });
-        localStorage.setItem("user", JSON.stringify(registered.data));
-        dispatch(addUser(registered.data));
-
-        navigate("/");
+        const stored = await asyncLocalStorage.setItem(
+          "user",
+          JSON.stringify(registered.data)
+        );
+        window.location.href = "/dashboard";
       } catch (error) {
         toast.error("Failed to register", {
           position: "top-center",
@@ -265,6 +267,9 @@ const AdminSignup = () => {
               onClick={handleSubmit}
             />
           </form>
+          <Link to="/admin/login" className="goto_signup_btn">
+            Go to Login
+          </Link>
         </div>
       </div>
     </div>

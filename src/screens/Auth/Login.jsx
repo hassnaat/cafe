@@ -3,9 +3,10 @@ import "./Auth.css";
 import User from "../../assets/images/user.png";
 import axios from "../../axiosInstance";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../store/user";
+import asyncLocalStorage from "./asyncLocalStorage";
 const Login = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -39,10 +40,11 @@ const Login = () => {
     } else {
       try {
         const registered = await axios.post("/login", data);
-        localStorage.setItem("user", JSON.stringify(registered.data));
-        dispatch(addUser(registered.data));
-
-        navigate("/children");
+        const stored = await asyncLocalStorage.setItem(
+          "user",
+          JSON.stringify(registered.data)
+        );
+        window.location.href = "/";
       } catch (error) {
         toast.error("Failed to Login", {
           position: "top-center",
@@ -92,6 +94,9 @@ const Login = () => {
               onClick={handleSubmit}
             />
           </form>
+          <Link to="/signup" className="goto_signup_btn">
+            Go to Signup
+          </Link>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import useFetch from "../../hooks/UseFetch";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-const AddChild = ({ setAddChild }) => {
+const AddChild = ({ setAddChild, setChildrenData }) => {
   const [provinceId, setProvinceId] = useState(1);
   const navigate = useNavigate();
   const [cityId, setCityId] = useState(1);
@@ -24,11 +24,7 @@ const AddChild = ({ setAddChild }) => {
     city_id: null,
     school_id: null,
   });
-  const children = useFetch(`/childrens/${userData.user.id}`, {
-    headers: {
-      Authorization: `Bearer ${userData.token}`,
-    },
-  });
+
   const fetchCities = async () => {
     try {
       const res = await axios.get(`/cities/${provinceId}`);
@@ -93,8 +89,13 @@ const AddChild = ({ setAddChild }) => {
   const handleImageUpload = async (event) => {
     console.log(event.target.files[0]);
     const file = event.target.files[0];
-    const base64 = await this.convertBase64(file);
-    alert(base64);
+    const base64 = await convertBase64(file);
+    setData((preVal) => {
+      return {
+        ...preVal,
+        image: base64,
+      };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -116,6 +117,7 @@ const AddChild = ({ setAddChild }) => {
           "/addChild",
           {
             ...data,
+
             province_id: parseInt(provinceId),
             city_id: parseInt(cityId),
             school_id: parseInt(schoolId),
@@ -126,15 +128,7 @@ const AddChild = ({ setAddChild }) => {
             },
           }
         );
-        if (res) {
-          const children = await axios.get(`/childrens/${userData.user.id}`, {
-            headers: {
-              Authorization: `Bearer ${userData.token}`,
-            },
-          });
-        }
-
-        setAddChild(false);
+        window.location.href = "/";
       } catch (error) {
         toast.error("Something went wrong", {
           position: "top-center",
@@ -243,7 +237,7 @@ const AddChild = ({ setAddChild }) => {
           <input
             type="submit"
             className={`login_form_btn ${
-              disableSubmit && "disable_submit_btn"
+              data.image === null && "disable_submit_btn"
             }`}
             value="Add Child"
             onClick={handleSubmit}

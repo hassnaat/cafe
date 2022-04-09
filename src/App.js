@@ -23,7 +23,7 @@ function App() {
     else {
       setAuthenticated(false)
     }
-  }, [])
+  }, [localStorage.getItem("user")])
   return (
     <Router>
       <div className="App">
@@ -39,12 +39,12 @@ function App() {
           pauseOnHover
         />
         <Routes>
-          <Route path="/admin/login" element={!authenticated ? <AdminLogin /> : <Navigate replace to="/" />} />
-          <Route path="/login" element={!authenticated ? <Login /> : <Navigate replace to="/children" />} />
-          <Route path="/signup" element={!authenticated ? <Signup /> : <Navigate replace to="/children" />} />
-          <Route path="/admin/signup" element={!authenticated ? <AdminSignup /> : <Navigate replace to="/" />} />
-          <Route path="/" element={authenticated ? <Home /> : <Navigate replace to="/admin/login" />} />
-          <Route path="/children" element={authenticated ? <Children /> : <Navigate replace to="/login" />} />
+          <Route path="/admin/login" element={!authenticated ? <AdminLogin /> : <Navigate replace to="/dashboard" />} />
+          <Route path="/login" element={!authenticated ? <Login /> : <Navigate replace to="/" />} />
+          <Route path="/signup" element={!authenticated ? <Signup /> : <Navigate replace to="/" />} />
+          <Route path="/admin/signup" element={!authenticated ? <AdminSignup /> : <Navigate replace to="/dashboard" />} />
+          <Route path="/dashboard" element={authenticated ? <Home /> : <Navigate replace to="/admin/login" />} />
+          <Route path="/" element={authenticated ? <Children /> : <Navigate replace to="/login" />} />
           <Route path="/checkout" element={authenticated ? <Checkout /> : <Navigate replace to="/login" />} />
         </Routes>
       </div>

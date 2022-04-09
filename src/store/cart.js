@@ -35,7 +35,7 @@ export const counterSlice = createSlice({
             state.products = state.products.filter(item => item.product_id !== action.payload)
         },
         clearCart: (state) => {
-            state = {}
+            state.products = []
         },
     },
 })

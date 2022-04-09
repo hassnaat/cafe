@@ -13,6 +13,7 @@ import axios from "../../axiosInstance";
 import { toast } from "react-toastify";
 import {
   addItem,
+  clearCart,
   decrementItem,
   incrementItem,
   removeItem,
@@ -21,45 +22,7 @@ import { addUser } from "../../store/user";
 import useFetch from "../../hooks/UseFetch";
 import CheckoutModal from "../Modals/Checkout";
 import Logout from "../Auth/Logout";
-
-const products = [
-  {
-    title: "Burger",
-    price: 5,
-    image:
-      "https://media.istockphoto.com/photos/juicy-hamburger-on-white-background-picture-id1206323282?k=20&m=1206323282&s=612x612&w=0&h=yatlq6BHRCCvoTzFZLSwaJc0O8Quct_tRPWtH0dj9Fc=",
-  },
-  {
-    title: "pizza",
-    price: 5,
-    image:
-      "https://www.hungryhowies.com/sites/default/files/styles/menu_item_280x175/public/images/menu-items/thumbnails/buildyourownpizza_0.png?itok=fgzFck86",
-  },
-  {
-    title: "water",
-    price: 1,
-    image:
-      "https://karachiistanbul.com/wp-content/uploads/2021/05/WaterBottle.jpg",
-  },
-  {
-    title: "juice",
-    price: 2,
-    image:
-      "https://www.populargroup.com.pk/assets/images/juices/polly/polly-10.jpg",
-  },
-  {
-    title: "fries",
-    price: 4,
-    image:
-      "https://mcdonalds.com.pk/wp-content/uploads/Medium-Fries-1-600x600.png",
-  },
-  {
-    title: "sandwitch",
-    price: 3,
-    image:
-      "https://image.similarpng.com/thumbnail/2020/08/Deslicious-sandwitch-on-transparent-PNG.png",
-  },
-];
+import LogoutAdmin from "../Auth/LogoutAdmin";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -82,6 +45,7 @@ const Home = () => {
   };
   const searchChild = async (e) => {
     e.preventDefault();
+    dispatch(clearCart());
     try {
       const child = await axios.get(
         `/children/${user.user.user_code}${handleString(childId)}`,
@@ -121,11 +85,18 @@ const Home = () => {
       )}
       <div className="home_screen_header">
         <div className="hs_logout_wrapper">
-          <Logout isAdmin={true} />
+          <Logout />
         </div>
         <div className="hs_header_left">
           <div className="hs_hl_image">
-            <img src={Avatar} alt="" />
+            <img
+              src={
+                childData.image !== null
+                  ? `data:image/png;base64,${childData.image}`
+                  : Avatar
+              }
+              alt=""
+            />
           </div>
           <div className="hs_hl_info">
             <div>Name: {childData?.name}</div>

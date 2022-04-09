@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "../../axiosInstance";
 import "./Modals.css";
-import useFetch from "../../hooks/UseFetch";
+
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { clearCart } from "../../store/cart";
 
 const CheckoutModal = ({ setCheckoutModal, childData, searchChild }) => {
   const user = useSelector((state) => state.user);
@@ -24,7 +22,7 @@ const CheckoutModal = ({ setCheckoutModal, childData, searchChild }) => {
 
   const handleCheckout = async () => {
     try {
-      const updated = axios.put(
+      const updated = await axios.put(
         "/children",
         {
           child_id: childData.child_id,
@@ -37,7 +35,7 @@ const CheckoutModal = ({ setCheckoutModal, childData, searchChild }) => {
         }
       );
       setCheckoutModal(false);
-      window.location.pathname = "/";
+      window.location.pathname = "/dashboard";
     } catch (error) {
       toast.error("Something went wrong", {
         position: "top-center",
